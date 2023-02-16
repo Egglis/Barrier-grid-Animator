@@ -8,27 +8,13 @@ widgetHandler = WidgetHandler(window)
 
 window.mainloop()
 
-## More Plans
-# Make backgorund customizable
-# Make sliders for bar widths etc
 
 # Plan/Uml
 # TODO For the LOVE OF GOD PLEASE KEEP THE FILES as SHORT as POSSIBLE, pytho  /: 
 # TODO Make a custom widget for every single gui options
-# Main.py
-#   - C: Canvas
-#       - update()
-#   - C: Ui
-#       - Get Xsetting()
-#       - Set Xsetting()
-#       - OnUiChange() -> Call Canvas.update()
-#   - C: FileLoader
-#       - getImage(timeStep)
-#       - loadFile(fileName)  
-#   - C: Animator -> Does the magic 
-#       - ComputeNewImage()
-#       + FindEdge()
-#       + LookForPossibleOptimizations()
-#       + 
-##
+# TODO MAKE more options for testing diffirent stuff
+# TODO Try out blurred images??
+# TODO Try using colerd overlays as shown in the paper in the pdf
+# TODO Automatically try to reduce the frames of gifs into somewhere between 4-7, optimal range
+# TODO Try circulary mask instead
 

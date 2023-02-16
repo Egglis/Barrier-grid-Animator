@@ -1,6 +1,23 @@
 from PIL import Image, ImageTk, ImageDraw, ImageSequence
 from Functions import vec
 
+def calcNewSize(viewport, current):
+    aspectRatio = current.x / current.y
+    new_size = current
+    if current.x < viewport.x or current.y < viewport.y:
+        if (viewport.x / aspectRatio) < viewport.y:
+            new_size.x = viewport.x
+            new_size.y = int(new_size.x / aspectRatio)
+        else:
+            new_size.y = viewport.y
+            new_size.x = int(new_size.y * aspectRatio)
+    else:
+
+        new_size.x = current.x
+        new_size.y = current.y
+    return new_size
+
+
 class GridAnimator:
     hatch_width = 2
     hatch_spacing = 10
@@ -9,28 +26,12 @@ class GridAnimator:
     currentSize = None
     numFrames = 0
 
-    def __calcNewSize(self, viewport, current):
-        aspectRatio = current.x / current.y
-        new_size = current
-        if current.x < viewport.x or current.y < viewport.y:
-            if (viewport.x / aspectRatio) < viewport.y:
-                new_size.x = viewport.x
-                new_size.y = int(new_size.x / aspectRatio)
-            else:
-                new_size.y = viewport.y
-                new_size.x = int(new_size.y * aspectRatio)
-        else:
-
-            new_size.x = current.x
-            new_size.y = current.y
-        return new_size
-
     def makeCompositeImage(self, filename, viewport):
         sequence = Image.open(filename)
 
         # Set Current Information
         self.numFrames = sequence.n_frames
-        self.currentSize = self.__calcNewSize(viewport, vec(sequence.size[0], sequence.size[1]))
+        self.currentSize = calcNewSize(viewport, vec(sequence.size[0], sequence.size[1]))
 
         # Base Image
         new_image = Image.new("RGBA", (self.currentSize.x, self.currentSize.y), (0, 0, 0, 0))

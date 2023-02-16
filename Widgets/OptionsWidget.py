@@ -1,5 +1,4 @@
-# Frame Skipping
-# Automatic background removal
+
 from Widgets.WidgetInterface import Widget
 import tkinter as tk
 

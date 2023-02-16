@@ -22,7 +22,7 @@ class vec:
             self.a = w
             self.n += 1
 
-
+# Your basic re-map function, most likely a package for this :(
 def reMap(value, oldMin, oldMax, newMin, newMax):
     OldRange = (oldMax - oldMin)
     NewRange = (newMax - newMin)
