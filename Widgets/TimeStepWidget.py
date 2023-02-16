@@ -9,3 +9,6 @@ class TimeStepWidget(Widget):
 
     def setFromTo(self, from_, to):
         self.obj.config(from_=from_, to=to)
+
+    def setValue(self, value):
+        self.obj.set(value)

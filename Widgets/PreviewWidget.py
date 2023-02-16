@@ -24,13 +24,16 @@ class PreviewWidget(Widget):
 
     def updateMask(self, mask):
         self.mask = mask
-        #x = (self.viewport.x * 0.5) - (mask.width() * 0.5)
-        #y = (self.viewport.y * 0.5) - (mask.height() * 0.5)
 
         self.mask_id = self.obj.create_image(0, 0, anchor="nw", image=mask)
-        #self.obj.create_rectangle(0, 0, self.width, self.height, fill="#aa0000")
+
+    def hideMask(self, hidden):
+        if hidden:
+            self.obj.itemconfig(self.mask_id, state="hidden")
+        else:
+            self.obj.itemconfig(self.mask_id, state="normal")
 
     def moveMask(self, sliderValue, hatchWidth):
         value = int(sliderValue) - self.prevMaskStep
-        self.obj.move(self.mask_id, value*hatchWidth, 0)
+        self.obj.move(self.mask_id, value, 0)
         self.prevMaskStep = int(sliderValue)

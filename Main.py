@@ -3,7 +3,7 @@ import tkinter as tk  # Python3
 from WidgetHandler import WidgetHandler
 
 window = tk.Tk()
-
+window.geometry("1280x720")
 widgetHandler = WidgetHandler(window)
 
 window.mainloop()
