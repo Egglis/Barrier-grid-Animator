@@ -12,7 +12,7 @@ class MenuBarWidget(Widget):
 
     def __initFileMenu(self):
         self.file_menu = Menu(self.obj, tearoff=0)
-        self.file_menu.add_command(label="Open", command=lambda: self.handler.onFileSelection())
+        self.file_menu.add_command(label="Open", command=lambda: self.handler.openFileSelectionMenu())
         self.file_menu.add_command(label="Exit", command=self.root.quit)
 
         self.obj.add_cascade(label="File", menu=self.file_menu)
