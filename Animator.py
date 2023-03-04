@@ -30,9 +30,7 @@ class GridAnimator:
         # Base Image
         new_image = Image.new("RGBA", (self.currentSize.x, self.currentSize.y), (0, 0, 0, 0))
 
-
         includedFrames = self.reduceNumberOfFrames()
-
         col = 0
         while col < self.currentSize.x:
             frameIndex = 0
@@ -66,10 +64,13 @@ class GridAnimator:
             x += self.hatch_width*(self.numFrames-1) + self.hatch_width
         return ImageTk.PhotoImage(img_mask)
 
-
     def reduceNumberOfFrames(self):
         print("Number of Frames: ", self.numFrames)
         includedFrames = list()
+        if self.targetFrames is None:
+            includedFrames = range(self.numFrames)
+            return includedFrames
+
         if self.targetFrames > self.numFrames:
             includedFrames = range(self.numFrames)
             self.targetFrames = None

@@ -1,8 +1,11 @@
+import tkinter
+
 from Widgets.WidgetInterface import Widget
+from PIL import Image, ImageTk, ImageDraw, ImageSequence
 from tkinter import Canvas
 from Functions import vec, reMap
 
-class PreviewWidget(Widget):
+class CanvasWidget(Widget):
     viewport = vec(1280, 720)
 
     image = None
@@ -12,9 +15,19 @@ class PreviewWidget(Widget):
     mask_id = 0
     prevMaskStep = 0
 
+    colorFilter = None
+    colorFilter_id = 0
+
     def setupWidget(self):
-        self.obj = Canvas(self.root, width=self.viewport.x, height=self.viewport.y, background="white")
-        self.obj.pack()
+        self.obj = Canvas(self.root, background="white")
+        #, width=self.viewport.x, height=self.viewport.y
+        self.obj.grid(row=0, column=1, sticky="sewn", padx=10)
+
+    def updateViewport(self):
+        w = self.obj.winfo_width()
+        h = self.obj.winfo_height()
+
+        self.viewport = vec(w, h)
 
     def updateImage(self, image):
         self.image = image
@@ -24,8 +37,11 @@ class PreviewWidget(Widget):
 
     def updateMask(self, mask):
         self.mask = mask
-
         self.mask_id = self.obj.create_image(0, 0, anchor="nw", image=mask)
+
+    def updateFilter(self, colorFilter):
+        self.colorFilter = colorFilter
+        self.colorFilter_id = self.obj.create_image(0, 0, anchor="nw", image=colorFilter)
 
     def hideMask(self, hidden):
         if hidden:

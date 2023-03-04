@@ -21,6 +21,14 @@ class vec:
             self.w = w
             self.a = w
             self.n += 1
+    def __str__(self):
+        if self.n == 2:
+            return "({0},{1})".format(self.x, self.y)
+        elif self.n == 3:
+            return "({0},{1},{2})".format(self.x, self.y, self.z)
+        elif self.n == 4:
+            return "({0},{1},{2},{3})".format(self.x, self.y, self.z, self.w)
+
 
 # Your basic re-map function, most likely a package for this :(
 def reMap(value, oldMin, oldMax, newMin, newMax):
