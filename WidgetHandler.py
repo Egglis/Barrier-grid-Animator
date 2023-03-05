@@ -1,5 +1,8 @@
 # Libraries
-from tkinter import filedialog
+import tkinter
+from tkinter import filedialog, ttk
+import threading
+
 from Functions import vec
 
 # Local Imports
@@ -26,15 +29,21 @@ class WidgetHandler:
 
     currentFile = None
 
+    progress_bar = None
+
     def __init__(self, window):
         self.window = window
 
-        self.animator.initProgressBar(window)
         self.menuBar = MenuBarWidget(window, self)
         self.canvas = CanvasWidget(window, self)
         self.timeStep = TimeStepWidget(window, self)
         self.options = OptionsWidget(window, self)
         self.loadPopup = FileLoaderWidget(window, self)
+
+        self.progress_bar = ttk.Progressbar(self.window,
+                                            orient=tkinter.HORIZONTAL,
+                                            length=100,
+                                            mode="determinate")
 
         self.__setupWidgets()
 
@@ -45,7 +54,6 @@ class WidgetHandler:
         self.options.setupWidget()
 
     def on_resize(self, event):
-
         self.window.columnconfigure(1, weight=1)
         self.window.rowconfigure(0, weight=1)
         self.canvas.updateViewport()
@@ -58,11 +66,15 @@ class WidgetHandler:
         self.loadPopup.setupWidget()
 
     def reloadImage(self):
-        self.loadImage()
+        self.progress_bar.place(x=0, y=0, width=self.window.winfo_width())
+        thread = threading.Thread(target=self.loadImage)
+        thread.start()
 
     def loadImage(self):
+        progress_len = self.animator.loadFile(self.currentFile, self.canvas.viewport)
+
         # Make composite image and the mask
-        composite_img = self.animator.makeCompositeImage(self.currentFile, self.canvas.viewport)
+        composite_img = self.animator.makeCompositeImage(self.progress_bar)
         mask = self.animator.makeBarMask(self.canvas.viewport)
         colorFilter = self.filter.getFilter(self.canvas.viewport)
 
@@ -74,9 +86,13 @@ class WidgetHandler:
         self.timeStep.setValue(0)
         self.timeStep.setFromTo(0, self.canvas.viewport.x)
 
+        self.progress_bar.stop()
+        self.progress_bar.place_forget()
+
     def onFileSelection(self):
 
         file_path = filedialog.askopenfilename()
+
         self.currentFile = file_path
         # Set the target frames and None if no frame reduction is used
         targetFrames = self.loadPopup.nrFramesSlider.get()
@@ -85,9 +101,15 @@ class WidgetHandler:
         else:
             self.animator.targetFrames = targetFrames
 
-        self.loadImage()
+
+        self.progress_bar.place(x=0, y=0, width=self.window.winfo_width())
+
+        thread = threading.Thread(target=self.loadImage)
+        thread.start()
+
 
         self.loadPopup.destroyWindow()
+        #self.progress_bar.destroy()
 
     def onMaskHide(self):
         self.canvas.hideMask(self.options.isMaskHidden.get())

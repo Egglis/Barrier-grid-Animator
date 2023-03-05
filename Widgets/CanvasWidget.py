@@ -21,7 +21,7 @@ class CanvasWidget(Widget):
     def setupWidget(self):
         self.obj = Canvas(self.root, background="white")
         #, width=self.viewport.x, height=self.viewport.y
-        self.obj.grid(row=0, column=1, sticky="sewn", padx=10)
+        self.obj.grid(row=0, column=1, sticky="sewn", padx=10, pady=20)
 
     def updateViewport(self):
         w = self.obj.winfo_width()

@@ -1,4 +1,5 @@
 import math
+import tkinter
 
 from PIL import Image, ImageTk, ImageDraw, ImageSequence
 from Functions import vec, scaleImageToViewPort
@@ -9,32 +10,31 @@ class GridAnimator:
     hatch_spacing = 10
     total_hatches = 50
 
-    currentSize = None
-    numFrames = 0
     targetFrames = None
 
-    progressBar = None
+    currentFile = None
+    currentSequence = None
+    currentSize = None
+    numFrames = 0
 
-    def initProgressBar(self, window):
-        self.progressBar = ttk.Progressbar(window, orient="horizontal", mode="determinate")
-        #self.progressBar.pack(fill="x")
-        pass
+    def loadFile(self, filename, viewport):
+        self.currentFile = filename
+        self.currentSequence = Image.open(self.currentFile)
+        self.numFrames = self.currentSequence.n_frames
+        self.currentSize = scaleImageToViewPort(viewport, vec(self.currentSequence.size[0], self.currentSequence.size[1]))
+        return self.currentSize.x
 
-    def makeCompositeImage(self, filename, viewport):
-        sequence = Image.open(filename)
-
-        # Set Current Information
-        self.numFrames = sequence.n_frames
-        self.currentSize = scaleImageToViewPort(viewport, vec(sequence.size[0], sequence.size[1]))
+    def makeCompositeImage(self, progress_bar : ttk.Progressbar):
 
         # Base Image
         new_image = Image.new("RGBA", (self.currentSize.x, self.currentSize.y), (0, 0, 0, 0))
 
         includedFrames = self.reduceNumberOfFrames()
         col = 0
+        steps = 0
         while col < self.currentSize.x:
             frameIndex = 0
-            for frame in ImageSequence.Iterator(sequence):
+            for frame in ImageSequence.Iterator(self.currentSequence):
                 if frameIndex in includedFrames:
                     # Resize the current frame and change the coloring mode into RGBA
                     frame = frame.resize((self.currentSize.x, self.currentSize.y))
@@ -44,7 +44,10 @@ class GridAnimator:
                         if col < self.currentSize.x:
                             for row in range(self.currentSize.y-1):
                                 new_image.putpixel((col, row), frame.getpixel((col, row)))
+
                             col += 1
+                            steps += 1
+                            progress_bar.step(100/self.currentSize.x)
 
                 frameIndex += 1
         return ImageTk.PhotoImage(new_image)
@@ -56,7 +59,6 @@ class GridAnimator:
         x = 0
 
         if self.targetFrames is not None:
-
             self.numFrames = self.targetFrames
 
         for i in range(int(viewport.x / self.hatch_width)):
