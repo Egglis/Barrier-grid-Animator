@@ -113,3 +113,13 @@ class WidgetHandler:
 
     def onMaskHide(self):
         self.canvas.hideMask(self.options.isMaskHidden.get())
+
+    def onFilterChange(self, color):
+        self.filter.addFilter(color)
+        self.options.updateFilterButtons(color)
+        colorFilter = self.filter.getFilter(self.canvas.viewport)
+        print(colorFilter)
+        self.canvas.updateFilter(colorFilter)
+
+    def onFilterHide(self):
+        self.canvas.hideFilter(self.options.isFilterActive.get())

@@ -42,6 +42,7 @@ class CanvasWidget(Widget):
     def updateFilter(self, colorFilter):
         self.colorFilter = colorFilter
         self.colorFilter_id = self.obj.create_image(0, 0, anchor="nw", image=colorFilter)
+        self.obj.itemconfigure(tagOrId=self.colorFilter_id, image=self.colorFilter)
 
     def hideMask(self, hidden):
         if hidden:
@@ -53,3 +54,9 @@ class CanvasWidget(Widget):
         value = int(sliderValue) - self.prevMaskStep
         self.obj.move(self.mask_id, value, 0)
         self.prevMaskStep = int(sliderValue)
+
+    def hideFilter(self, hidden):
+        if hidden:
+            self.obj.itemconfig(self.colorFilter_id, state="hidden")
+        else:
+            self.obj.itemconfig(self.colorFilter_id, state="normal")

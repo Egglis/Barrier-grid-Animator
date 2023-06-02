@@ -19,4 +19,6 @@ print("Window Closed")
 # TODO Try out blurred images??
 # TODO Try using colored overlays as shown in the paper in the pdf
 # TODO Try circle mask instead
+# TODO Look into cross fading gifs then frame reduction???
+# TODO Apply Color filter  
 
