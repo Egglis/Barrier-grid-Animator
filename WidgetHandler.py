@@ -118,8 +118,13 @@ class WidgetHandler:
         self.filter.addFilter(color)
         self.options.updateFilterButtons(color)
         colorFilter = self.filter.getFilter(self.canvas.viewport)
-        print(colorFilter)
         self.canvas.updateFilter(colorFilter)
 
     def onFilterHide(self):
         self.canvas.hideFilter(self.options.isFilterActive.get())
+
+    def onFilterMove(self, value):
+        print(value)
+        self.filter.intensity = int(value)
+        colorFilter = self.filter.getFilter(self.canvas.viewport)
+        self.canvas.updateFilter(colorFilter)

@@ -11,6 +11,8 @@ class ColorFilter:
     }
     currentFilter = vec(0, 0, 0, 0)
 
+    intensity = 0
+
     def __init__(self):
         pass
 
@@ -51,6 +53,11 @@ class ColorFilter:
         img_filter = Image.new("RGBA", (viewport.x, viewport.y), (0, 0, 0, 0))
         new_filter = ImageDraw.Draw(img_filter)
 
-        new_filter.rectangle((0, 0, viewport.x, viewport.y), fill=(self.currentFilter.x, self.currentFilter.y, self.currentFilter.z, 25))
+        alpha = 0
+        if self.currentFilter.x != 0 or self.currentFilter.y != 0 or self.currentFilter.z != 0:
+            alpha = self.intensity
+
+        new_filter.rectangle((0, 0, viewport.x, viewport.y), fill=(self.currentFilter.x, self.currentFilter.y, self.currentFilter.z, alpha))
         print("Filter: ", self.currentFilter)
         return ImageTk.PhotoImage(img_filter)
+    

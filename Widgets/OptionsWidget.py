@@ -15,6 +15,7 @@ class OptionsWidget(Widget):
 
     hideFilter = None
     isFilterActive = False
+    filterSlider = None
 
     def setupWidget(self):
         self.obj = tk.Frame(self.root)
@@ -23,6 +24,7 @@ class OptionsWidget(Widget):
         self.reloadOption()
         self.colorOptions()
         self.hideFilter()
+        self.filterSlider()
 
     def hideMaskOption(self):
         self.isMaskHidden = tk.BooleanVar()
@@ -61,6 +63,12 @@ class OptionsWidget(Widget):
         self.hideFilter.pack()
 
         self.hideFilter.config(command=self.handler.onFilterHide)
+
+    def filterSlider(self):
+        self.filterSlider = tk.Scale(self.obj, from_=0, to=255, orient=tk.HORIZONTAL)
+        self.filterSlider.pack()
+
+        self.filterSlider.config(command=self.handler.onFilterMove)
 
     def updateFilterButtons(self, color):
         if color == "red":

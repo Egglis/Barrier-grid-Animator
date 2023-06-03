@@ -16,6 +16,9 @@ class GridAnimator:
     currentSequence = None
     currentSize = None
     numFrames = 0
+    filterIntensity = 0.5
+
+    currentColor = str()
 
     def loadFile(self, filename, viewport):
         self.currentFile = filename
@@ -23,6 +26,10 @@ class GridAnimator:
         self.numFrames = self.currentSequence.n_frames
         self.currentSize = scaleImageToViewPort(viewport, vec(self.currentSequence.size[0], self.currentSequence.size[1]))
         return self.currentSize.x
+    
+
+    def setCurrentFilter(self, color):
+        self.currentColor = color
 
     def makeCompositeImage(self, progress_bar : ttk.Progressbar):
 
@@ -43,6 +50,8 @@ class GridAnimator:
                     for j in range(self.hatch_width):
                         if col < self.currentSize.x:
                             for row in range(self.currentSize.y-1):
+                                # Blend based on color TODO
+                                
                                 new_image.putpixel((col, row), frame.getpixel((col, row)))
 
                             col += 1
@@ -52,6 +61,16 @@ class GridAnimator:
                 frameIndex += 1
         return ImageTk.PhotoImage(new_image)
 
+
+    def applyFilter(self, pixelColor):
+        pixelColor = list(pixelColor)
+        if self.currentColor == "red":
+            pixelColor[0] = min(255, max(0, int(pixelColor[0] * self.filterIntensity)))
+        elif self.currentColor == "green":
+            pixelColor[1] = min(255, max(0, int(pixelColor[1] * self.filterIntensity)))
+        elif self.currentColor == "blue":
+            pixelColor[2] = min(255, max(0, int(pixelColor[2] * self.filterIntensity)))
+        return tuple(pixelColor)
 
     def makeBarMask(self, viewport):
         img_mask = Image.new("RGBA", (viewport.x, viewport.y), (0, 0, 0, 0))
