@@ -4,7 +4,7 @@ The goal of this project is to create a tool that can be used to generate barrie
  The complete source code can be found at: [https://github.com/Egglis/Barrier-grid-Animator](https://github.com/Egglis/Barrier-grid-Animator)
 
 
-![Screenshot](screenshots/Capture.PNG)
+![Screenshot](screenshots/Capture.png)
 
 ## Running the program
 The project was implmented with python3. The GUI was implmented using tkinter [[1]](#1) while the image manipulation was done using the Pillow library [[2]](#2). The project can be ran using any IDE by running <code>main.py</code>. The repository contains a <code>ExampleGifs</code> folder which contains example gifs that can be used to test the program.The program currently only supports gifs, but can be easily extended to support other image/video formats.
