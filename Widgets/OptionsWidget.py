@@ -2,6 +2,7 @@
 from Widgets.WidgetInterface import Widget
 import tkinter as tk
 
+# Widgets for all the option on the left side of the GUI
 class OptionsWidget(Widget):
 
     hideMask = None

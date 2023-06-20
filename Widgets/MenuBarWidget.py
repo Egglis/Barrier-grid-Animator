@@ -1,6 +1,7 @@
 from Widgets.WidgetInterface import Widget
 from tkinter import Menu
 
+# The menu bar widget on the top of the window
 class MenuBarWidget(Widget):
 
     file_menu = None

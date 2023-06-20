@@ -36,6 +36,7 @@ def reMap(value, oldMin, oldMax, newMin, newMax):
     NewRange = (newMax - newMin)
     return (((value - oldMin) * NewRange) / OldRange) + newMin
 
+# Scales the image to fit the viewport
 def scaleImageToViewPort(viewport, current):
     aspectRatio = current.x / current.y
     new_size = current

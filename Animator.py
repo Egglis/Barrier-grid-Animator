@@ -31,12 +31,16 @@ class GridAnimator:
     def setCurrentFilter(self, color):
         self.currentColor = color
 
+    # Generates the final image
     def makeCompositeImage(self, progress_bar : ttk.Progressbar):
 
         # Base Image
         new_image = Image.new("RGBA", (self.currentSize.x, self.currentSize.y), (0, 0, 0, 0))
 
+        # Frames to include
         includedFrames = self.reduceNumberOfFrames()
+
+        # Generate the composite image
         col = 0
         steps = 0
         while col < self.currentSize.x:
@@ -61,7 +65,7 @@ class GridAnimator:
                 frameIndex += 1
         return ImageTk.PhotoImage(new_image)
 
-
+    # Applies the filter to the image
     def applyFilter(self, pixelColor):
         pixelColor = list(pixelColor)
         if self.currentColor == "red":
@@ -72,6 +76,7 @@ class GridAnimator:
             pixelColor[2] = min(255, max(0, int(pixelColor[2] * self.filterIntensity)))
         return tuple(pixelColor)
 
+    # Generates the mask/bars for the final image
     def makeBarMask(self, viewport):
         img_mask = Image.new("RGBA", (viewport.x, viewport.y), (0, 0, 0, 0))
         new_mask = ImageDraw.Draw(img_mask)
@@ -85,6 +90,7 @@ class GridAnimator:
             x += self.hatch_width*(self.numFrames-1) + self.hatch_width
         return ImageTk.PhotoImage(img_mask)
 
+    # Frame reduction alogirthm, skips n frames
     def reduceNumberOfFrames(self):
         print("Number of Frames: ", self.numFrames)
         includedFrames = list()

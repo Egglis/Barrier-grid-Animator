@@ -22,7 +22,9 @@ The code structure consists of three main components:
 2. The algorithm that generates the final image and color filter: <code> Animator.py, ColorFilter.py</code>
 3. The widgets that make up the UI: <code> WidgetHandler.py </code> and <code> /Widgets</code> folder.
 
-All components communicate via the <code>WidgetHandler</code> which handles all input output for the GUI and applies them to the image generators which is finally displayed in the canvas. The structure can be summerized as follows:
+All components communicate via the <code>WidgetHandler</code> which handles all input/output for the GUI and applies them to the image generators which is finally displayed in the canvas. The <code> Functions.py </code> includes several supporting functions and classes which are used across the project.
+
+The structure can be summerized as follows:
 
 ![Screenshot](screenshots/uml.png)
 
@@ -62,7 +64,7 @@ Inside nested loops, the code iterates through each column, row, and hatch width
 ```python
 col += 1
 steps += 1
-progress_bar.step(100/self.currentSize.x)
+progress_bar.step()
 ```
 After processing the current column, the code increments the <code> col </code> variable, increments a <code> steps </code> counter, and updates a progress bar (represented by <code> progress_bar </code>) to indicate the progress of the algorithm. Finally it incrments the <code> frameIndex </code> to keep track of the current frame index in the image sequence.
 
@@ -76,7 +78,7 @@ Once all the frames and columns have been processed, the function returns a <cod
 
 
 ## Further Information and suggestions
-For additional information on this topic, I highly recommend referring to the Wikipedia page on  [Barrier-grid animation and stereography](https://en.wikipedia.org/wikiBarrier-grid_animation_and_stereography) [[3]](#3). It provides a detailed explanation of the concept. If you're looking for a more comprehensive implementation of barrier grid animation, I suggest exploring[Animabar v1.2](http://animbar.mnim.org) [[4]](#4). It offers a complete implementation of the technique; however, please note that it does not include features for importing gifs or applying color filters.
+For additional information on this topic, I highly recommend referring to the Wikipedia page on  [Barrier-grid animation and stereography](https://en.wikipedia.org/wikiBarrier-grid_animation_and_stereography) [[3]](#3). It provides a detailed explanation of the concept. If you're looking for a more comprehensive implementation of barrier grid animation, I suggest exploring [Animabar v1.2](http://animbar.mnim.org) [[4]](#4). It offers a complete implementation of the technique; however, please note that it does not include features for importing gifs or applying color filters.
 
 Here are a few suggestions and ideas that I developed during the course of this project but didn't have enough time to implement:
 - Cross-fading gifs: Explore the possibility of incorporating smooth transitions between different gifs to create visually appealing effects.

@@ -5,6 +5,7 @@ from PIL import Image, ImageTk, ImageDraw, ImageSequence
 from tkinter import Canvas
 from Functions import vec, reMap
 
+# The main canvas/preview widget
 class CanvasWidget(Widget):
     viewport = vec(1280, 720)
 

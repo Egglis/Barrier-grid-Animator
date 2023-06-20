@@ -3,6 +3,7 @@ import tkinter
 from Widgets.WidgetInterface import Widget
 from tkinter import Scale
 
+# The timestep/timeline widget
 class TimeStepWidget(Widget):
     def setupWidget(self):
         self.obj = Scale(self.root, length=720, orient="horizontal")

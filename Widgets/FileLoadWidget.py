@@ -1,6 +1,7 @@
 from Widgets.WidgetInterface import Widget
 import  tkinter as tk
 
+# Widget for loading a file and reducing frames if needed
 class FileLoaderWidget(Widget):
 
     frameReduction = True

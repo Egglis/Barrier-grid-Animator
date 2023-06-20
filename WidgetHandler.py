@@ -31,6 +31,7 @@ class WidgetHandler:
 
     progress_bar = None
 
+    # Initialize the widgets
     def __init__(self, window):
         self.window = window
 
@@ -47,6 +48,7 @@ class WidgetHandler:
 
         self.__setupWidgets()
 
+    # Setup the widgets
     def __setupWidgets(self):
         self.menuBar.setupWidget()
         self.canvas.setupWidget()
@@ -89,6 +91,7 @@ class WidgetHandler:
         self.progress_bar.stop()
         self.progress_bar.place_forget()
 
+    # Called when the user clicks the "Load" button
     def onFileSelection(self):
 
         file_path = filedialog.askopenfilename()
@@ -111,20 +114,23 @@ class WidgetHandler:
         self.loadPopup.destroyWindow()
         #self.progress_bar.destroy()
 
+    # Called when the user clicks the "hide mask" button
     def onMaskHide(self):
         self.canvas.hideMask(self.options.isMaskHidden.get())
 
+    # Called when the user clicks the "hide filter" button
+    def onFilterHide(self):
+        self.canvas.hideFilter(self.options.isFilterActive.get())
+
+    # Called when the use changes the color filter
     def onFilterChange(self, color):
         self.filter.addFilter(color)
         self.options.updateFilterButtons(color)
         colorFilter = self.filter.getFilter(self.canvas.viewport)
         self.canvas.updateFilter(colorFilter)
 
-    def onFilterHide(self):
-        self.canvas.hideFilter(self.options.isFilterActive.get())
-
+    # Called when the user manipulates mask
     def onFilterMove(self, value):
-        print(value)
         self.filter.intensity = int(value)
         colorFilter = self.filter.getFilter(self.canvas.viewport)
         self.canvas.updateFilter(colorFilter)
